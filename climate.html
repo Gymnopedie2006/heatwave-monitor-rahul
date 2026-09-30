@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Climate Monitoring Object</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
+</head>
+<body>
+    <header style="background-color: #ffcc00; padding: 20px; border-bottom: 4px solid #ff4500; text-align: center;">
+        <h1 style="color: #d32f2f;" title="Climate Intelligence Portal for Early Warning" id="main-title">Heatwave Intelligence System</h1>
+        <p style="color: #333333; font-weight: bold;" class="slogan">Current Season: Monsoon 2026</p>
+        <span style="font-family: monospace;">Logo Text: KJS-CES-01</span>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar sidebar-card">
+            <h3>Navigation Menu</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="analysis.html">Temp Analysis (Expt 5)</a></li>
+                <li><a href="warning.html">Warning Engine (Expt 5)</a></li>
+                <li><a href="climate.html">Climate Object (Expt 5)</a></li>
+                <li><a href="temp_analysis.html">Array Analysis (Expt 5)</a></li>
+                <li><a href="climate_val.html">Citizen Register (Expt 5)</a></li>
+                <li><a href="navigation.html">All Pages</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h2>Task 3: JavaScript Climate Monitoring Object</h2>
+            <div id="objectDisplay" class="sidebar-card"></div>
+            <br>
+            <button onclick="triggerAlertUpdate()" style="background-color: #0056b3; color: white; padding: 10px; border: none; cursor: pointer; border-radius: 4px;">Update Alert Status</button>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Disaster Management Agency</p>
+    </footer>
+
+    <script>
+        let climateData = {
+            location: "Mumbai",
+            city: "Mumbai Metropolitan",
+            temperature: 39,
+            humidity: 65,
+            windSpeed: 12,
+            forecastTemperature: 41,
+            riskLevel: "High",
+            alertStatus: "Active",
+            monitoringDate: "2026-09-30",
+
+            displayData: function() {
+                console.log("=== Location Telemetry ===");
+                console.log("Location: " + this.location + " (" + this.city + ")");
+                console.log("Temperature: " + this.temperature + "°C");
+                console.log("Humidity: " + this.humidity + "%");
+                console.log("Risk Level: " + this.riskLevel);
+                console.log("Alert Status: " + this.alertStatus);
+            },
+
+            calcTempDiff: function(threshold) {
+                return this.temperature - threshold;
+            },
+
+            determineRisk: function() {
+                if (this.temperature >= 40) return "Severe";
+                if (this.temperature >= 38) return "High";
+                return "Moderate";
+            },
+
+            displayEarlyWarning: function() {
+                return (this.forecastTemperature >= 40) 
+                    ? "URGENT: Extreme heat predicted within 24 hours!" 
+                    : "Stable: No immediate surge predicted.";
+            },
+
+            updateAlertStatus: function(newStatus) {
+                this.alertStatus = newStatus;
+                console.log("Updated Alert Status to: " + this.alertStatus);
+            }
+        };
+
+        function renderObjectToPage() {
+            climateData.displayData();
+            let threshold = 37;
+            let diff = climateData.calcTempDiff(threshold);
+            let risk = climateData.determineRisk();
+            let warning = climateData.displayEarlyWarning();
+
+            document.getElementById('objectDisplay').innerHTML = `
+                <h3>Station Telemetry: ${climateData.location}</h3>
+                <p><strong>City:</strong> ${climateData.city}</p>
+                <p><strong>Temperature:</strong> ${climateData.temperature}&deg;C</p>
+                <p><strong>Humidity:</strong> ${climateData.humidity}%</p>
+                <p><strong>Wind Speed:</strong> ${climateData.windSpeed} km/h</p>
+                <p><strong>Forecast Peak:</strong> ${climateData.forecastTemperature}&deg;C</p>
+                <p><strong>Threshold Difference (${threshold}&deg;C):</strong> +${diff}&deg;C</p>
+                <p><strong>Calculated Risk:</strong> ${risk}</p>
+                <p><strong>Early Warning Advisory:</strong> ${warning}</p>
+                <p><strong>Current Alert Status:</strong> <mark>${climateData.alertStatus}</mark></p>
+            `;
+        }
+
+        function triggerAlertUpdate() {
+            let nextStatus = climateData.alertStatus === "Active" ? "Escalated to Red Bulletin" : "Active";
+            climateData.updateAlertStatus(nextStatus);
+            renderObjectToPage();
+        }
+
+        renderObjectToPage();
+    </script>
+</body>
+</html>

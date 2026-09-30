@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Observation Entry & Validation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <header style="background-color: #ffcc00; padding: 20px; border-bottom: 4px solid #ff4500; text-align: center;">
+        <h1 style="color: #d32f2f;" title="Climate Intelligence Portal for Early Warning" id="main-title">Heatwave Intelligence System</h1>
+        <p style="color: #333333; font-weight: bold;" class="slogan">Current Season: Monsoon 2026</p>
+        <span style="font-family: monospace;">Logo Text: KJS-CES-01</span>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar sidebar-card">
+            <h3>Navigation Menu</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-system.html">About System</a></li>
+                <li><a href="sources.html">Data Sources</a></li>
+                <li><a href="hotspot-map.html">Hotspot Map</a></li>
+                <li><a href="forecast.html">Forecast</a></li>
+                <li><a href="alert-details.html">Alert Bulletins</a></li>
+                <li><a href="media.html">Media Coverage</a></li>
+                <li><a href="subscribe.html">Subscribe</a></li>
+                <li><a href="navigation.html">Navigation</a></li>
+                <li><a href="validation.html">Weather Data Entry</a></li>
+                <li><a href="https://mausam.imd.gov.in/" target="_blank">IMD Website</a></li>
+                <li><a href="mailto:coordinator@kjs-ces-01.org">Email Coordinator</a></li>
+                <li><a href="tel:+911234567890">Helpline</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h2>Weather Observation Data Entry</h2>
+            
+            <div id="successBox" class="success-box" style="display: none;"></div>
+
+            <form id="weatherForm" action="#" method="post" novalidate>
+                <fieldset>
+                    <legend>Observer & AWS Weather Record</legend>
+
+                    <label for="observerName">Observer Full Name: *</label>
+                    <input type="text" id="observerName" name="observerName" required>
+                    <div id="nameError" class="error-text"></div>
+
+                    <label for="stationId">AWS Station ID (Format: AWS001): *</label>
+                    <input type="text" id="stationId" name="stationId" placeholder="AWS001" required>
+                    <div id="stationError" class="error-text"></div>
+
+                    <label for="email">Observer Email Address: *</label>
+                    <input type="email" id="email" name="email" required>
+                    <div id="emailError" class="error-text"></div>
+
+                    <label for="mobile">Mobile Number (10 Digits): *</label>
+                    <input type="tel" id="mobile" name="mobile" placeholder="e.g. 9876543210" required>
+                    <div id="mobileError" class="error-text"></div>
+
+                    <label for="location">Station Location / City: *</label>
+                    <input type="text" id="location" name="location" required>
+                    <div id="locationError" class="error-text"></div>
+
+                    <label for="obsDate">Observation Date: *</label>
+                    <input type="date" id="obsDate" name="obsDate" required>
+                    <div id="dateError" class="error-text"></div>
+
+                    <label for="maxTemp">Recorded Maximum Temperature (&deg;C): *</label>
+                    <input type="number" id="maxTemp" name="maxTemp" step="0.1" placeholder="e.g. 44.5" required>
+                    <div id="tempError" class="error-text"></div>
+
+                    <label for="humidity">Relative Humidity (%): *</label>
+                    <input type="number" id="humidity" name="humidity" min="0" max="100" placeholder="0 - 100" required>
+                    <div id="humidityError" class="error-text"></div>
+
+                    <label for="alertLevel">Heatwave Alert Level: *</label>
+                    <select id="alertLevel" name="alertLevel" required>
+                        <option value="">-- Select Alert Level --</option>
+                        <option value="Normal">Normal (No Warning)</option>
+                        <option value="Yellow">Yellow (Heat Alert)</option>
+                        <option value="Orange">Orange (Severe Heat Alert)</option>
+                        <option value="Red">Red (Extreme Warning)</option>
+                    </select>
+                    <div id="alertError" class="error-text"></div>
+
+                    <br>
+                    <input type="submit" value="Submit Weather Observation">
+                    <input type="reset" value="Reset Form" id="resetBtn">
+                </fieldset>
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Disaster Management Agency</p>
+    </footer>
+
+    <script>
+        document.getElementById('weatherForm').addEventListener('submit', function(event) {
+            // Task 5: Prevent form submission until full client-side validation passes
+            event.preventDefault();
+
+            let isValid = true;
+
+            // Clear previous errors
+            const errorDivs = document.querySelectorAll('.error-text');
+            errorDivs.forEach(div => div.textContent = '');
+
+            const successBox = document.getElementById('successBox');
+            successBox.style.display = 'none';
+            successBox.innerHTML = '';
+
+            // Retrieve form values
+            const name = document.getElementById('observerName').value.trim();
+            const stationId = document.getElementById('stationId').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const location = document.getElementById('location').value.trim();
+            const obsDate = document.getElementById('obsDate').value;
+            const maxTemp = document.getElementById('maxTemp').value.trim();
+            const humidity = document.getElementById('humidity').value.trim();
+            const alertLevel = document.getElementById('alertLevel').value;
+
+            // Task 2: Validate User Name (alphabets and spaces only, at least 3 characters)
+            const nameRegex = /^[A-Za-z\s]{3,}$/;
+            if (!nameRegex.test(name)) {
+                document.getElementById('nameError').textContent = "Name must contain alphabets and spaces only, and be at least 3 characters long.";
+                isValid = false;
+            }
+
+            // Task 2: Validate AWS Station ID (Format: AWS followed by 3 digits, e.g., AWS001)
+            const stationRegex = /^AWS\d{3}$/i;
+            if (!stationRegex.test(stationId)) {
+                document.getElementById('stationError').textContent = "Station ID must follow the standard AWS format (e.g., AWS001).";
+                isValid = false;
+            }
+
+            // Task 3: Validate Email using Regular Expression
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = "Please enter a valid email address (e.g., observer@kjs-ces-01.org).";
+                isValid = false;
+            }
+
+            // Task 3: Validate Indian 10-digit Mobile Number (starts with 6-9)
+            const mobileRegex = /^[6-9]\d{9}$/;
+            if (!mobileRegex.test(mobile)) {
+                document.getElementById('mobileError').textContent = "Mobile number must be a valid 10-digit number starting with 6, 7, 8, or 9.";
+                isValid = false;
+            }
+
+            // Validate Location
+            if (location.length === 0) {
+                document.getElementById('locationError').textContent = "Station location cannot be left empty.";
+                isValid = false;
+            }
+
+            // Task 4: Validate Observation Date (must not be empty)
+            if (!obsDate) {
+                document.getElementById('dateError').textContent = "Please select a valid observation date.";
+                isValid = false;
+            }
+
+            // Task 4: Validate Weather Observation Data (Max Temperature numeric)
+            if (maxTemp === "" || isNaN(maxTemp)) {
+                document.getElementById('tempError').textContent = "Maximum temperature must be a valid number.";
+                isValid = false;
+            } else if (parseFloat(maxTemp) < -10 || parseFloat(maxTemp) > 65) {
+                document.getElementById('tempError').textContent = "Maximum temperature must be within a realistic atmospheric range (-10°C to 65°C).";
+                isValid = false;
+            }
+
+            // Task 4: Validate Humidity (between 0 and 100 percent)
+            if (humidity === "" || isNaN(humidity)) {
+                document.getElementById('humidityError').textContent = "Humidity must be a numeric value.";
+                isValid = false;
+            } else {
+                const humidNum = parseFloat(humidity);
+                if (humidNum < 0 || humidNum > 100) {
+                    document.getElementById('humidityError').textContent = "Humidity must be between 0% and 100%.";
+                    isValid = false;
+                }
+            }
+
+            // Task 5: Validate Alert Level
+            if (!alertLevel) {
+                document.getElementById('alertError').textContent = "Please select a heatwave alert level.";
+                isValid = false;
+            }
+
+            // Task 5: Display success message when all conditions are met
+            if (isValid) {
+                successBox.style.display = 'block';
+                successBox.innerHTML = `<strong>Data Verification Passed!</strong><br>Observation record for Station <strong>${stationId.toUpperCase()}</strong> (${location}) has been validated and accepted into the Climate Intelligence System.`;
+                document.getElementById('weatherForm').reset();
+            }
+        });
+
+        // Clear error text on reset
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            document.querySelectorAll('.error-text').forEach(div => div.textContent = '');
+            const successBox = document.getElementById('successBox');
+            successBox.style.display = 'none';
+            successBox.innerHTML = '';
+        });
+    </script>
+</body>
+</html>

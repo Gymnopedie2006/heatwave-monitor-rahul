@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heatwave Risk & Early-Warning</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
+</head>
+<body>
+    <header style="background-color: #ffcc00; padding: 20px; border-bottom: 4px solid #ff4500; text-align: center;">
+        <h1 style="color: #d32f2f;" title="Climate Intelligence Portal for Early Warning" id="main-title">Heatwave Intelligence System</h1>
+        <p style="color: #333333; font-weight: bold;" class="slogan">Current Season: Monsoon 2026</p>
+        <span style="font-family: monospace;">Logo Text: KJS-CES-01</span>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar sidebar-card">
+            <h3>Navigation Menu</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="analysis.html">Temp Analysis (Expt 5)</a></li>
+                <li><a href="warning.html">Warning Engine (Expt 5)</a></li>
+                <li><a href="climate.html">Climate Object (Expt 5)</a></li>
+                <li><a href="temp_analysis.html">Array Analysis (Expt 5)</a></li>
+                <li><a href="climate_val.html">Citizen Register (Expt 5)</a></li>
+                <li><a href="navigation.html">All Pages</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h2>Task 2: Heatwave Risk and Early-Warning Decision</h2>
+            
+            <div class="sidebar-card" style="margin-bottom: 20px;">
+                <h3>Evaluate Conditions</h3>
+                <label>Location: <input type="text" id="cityInput" value="Pune" style="margin: 5px;"></label><br>
+                <label>Current Temp (&deg;C): <input type="number" id="tempInput" value="39" style="margin: 5px;"></label><br>
+                <label>Humidity (%): <input type="number" id="humidityInput" value="65" style="margin: 5px;"></label><br>
+                <label>Forecast Temp (&deg;C): <input type="number" id="forecastInput" value="41" style="margin: 5px;"></label><br><br>
+                <button onclick="evaluateRisk()" style="background-color: #ff4500; color: white; padding: 8px 15px; border: none; cursor: pointer; border-radius: 4px;">Evaluate Warning Level</button>
+            </div>
+
+            <div id="decisionCard" class="alert-box" style="animation: none;"></div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Disaster Management Agency</p>
+    </footer>
+
+    <script>
+        function evaluateRisk() {
+            let location = document.getElementById('cityInput').value;
+            let temp = parseFloat(document.getElementById('tempInput').value);
+            let humidity = parseFloat(document.getElementById('humidityInput').value);
+            let forecastTemp = parseFloat(document.getElementById('forecastInput').value);
+
+            let riskLevel = "";
+            let recommendation = "";
+
+            if (temp >= 40) {
+                riskLevel = "SEVERE";
+                recommendation = "Severe Heatwave Warning";
+            } else if (temp >= 38 && humidity >= 60) {
+                riskLevel = "HIGH";
+                recommendation = "High Heat Risk – Issue Warning";
+            } else if (temp >= 35 && temp <= 38) {
+                riskLevel = "MODERATE";
+                recommendation = "Moderate Heat Risk – Monitor Conditions";
+            } else if (forecastTemp >= 40) {
+                riskLevel = "EARLY WARNING";
+                recommendation = "Early Warning – Prepare for Heatwave";
+            } else {
+                riskLevel = "NORMAL";
+                recommendation = "Normal – Continue Monitoring";
+            }
+
+            console.log(`Location: ${location} | Temp: ${temp}°C | Humidity: ${humidity}% | Risk: ${riskLevel} | Advisory: ${recommendation}`);
+
+            document.getElementById('decisionCard').innerHTML = `
+                <strong>Location:</strong> ${location}<br>
+                <strong>Temperature:</strong> ${temp}&deg;C | <strong>Humidity:</strong> ${humidity}%<br>
+                <strong>Forecast Peak:</strong> ${forecastTemp}&deg;C<br><br>
+                <strong>Risk Level:</strong> <span style="color: #b30000; font-size: 1.2em;">${riskLevel}</span><br>
+                <strong>Recommendation:</strong> ${recommendation}
+            `;
+        }
+
+        evaluateRisk();
+    </script>
+</body>
+</html>

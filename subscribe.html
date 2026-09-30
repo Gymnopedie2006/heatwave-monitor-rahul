@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advisory Subscription</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar sidebar-card">
+            <h3>Navigation Menu</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="navigation.html">Navigation</a></li>
+                <li><a href="about-system.html">About System</a></li>
+                <li><a href="sources.html">Data Sources</a></li>
+                <li><a href="hotspot-map.html">Hotspot Map</a></li>
+                <li><a href="forecast.html">Forecast</a></li>
+                <li><a href="alert-details.html">Alert Bulletins</a></li>
+                <li><a href="media.html">Media Coverage</a></li>
+                <li><a href="validation.html">Weather Data Entry</a></li>
+                <li><a href="subscribe.html">Subscribe</a></li>
+                <li><a href="https://mausam.imd.gov.in/" target="_blank">IMD Website</a></li>
+                <li><a href="mailto:coordinator@kjs-ces-01.org">Email Coordinator</a></li>
+                <li><a href="tel:+911234567890">Helpline</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h2>Subscribe to Heatwave Alerts</h2>
+
+            <form id="subscriber" action="#" method="post">
+                <fieldset>
+                    <legend>Citizen Details</legend>
+                    <label>Name: <input type="text" name="name" required></label>
+                    <label>Email: <input type="email" name="email" required></label>
+                    <label>Mobile Number: <input type="tel" name="mobile" required></label>
+                   
+                    <label>Region:
+                        <select name="region">
+                            <option value="north">North Zone</option>
+                            <option value="central">Central Zone</option>
+                            <option value="south">South Zone</option>
+                        </select>
+                    </label>
+                   
+                    <p>Preferred Language:</p>
+                    <input type="radio" name="language" value="english" checked> English
+                    <input type="radio" name="language" value="hindi"> Hindi
+                   
+                    <p>Alert Types to Receive:</p>
+                    <input type="checkbox" name="alerts" value="hw"> Standard Heatwave
+                    <input type="checkbox" name="alerts" value="shw"> Severe Heatwave Warning
+                    <br><br>
+                   
+                    <input type="submit" value="Subscribe Now">
+                    <input type="reset" value="Clear Form">
+                </fieldset>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        document.getElementById('subscriber').addEventListener('submit', function(event) 
+        {
+            const name = this.elements['name'].value.trim();
+            const mobile = this.elements['mobile'].value.trim();
+            const alerts = this.querySelectorAll('input[name="alerts"]:checked');
+
+            let errors = [];
+
+            if (name.length < 2) 
+            {
+                errors.push("Please enter a valid full name (at least 2 characters).");
+            }
+
+            const mobileRegex = /^[0-9]{10}$/;
+            if (!mobileRegex.test(mobile)) 
+            {
+                errors.push("Mobile number must be exactly 10 digits.");
+            }
+
+            if (alerts.length === 0) 
+            {
+                errors.push("Please select at least one Alert Type to receive.");
+            }
+
+            if (errors.length > 0) 
+            {
+                event.preventDefault();
+                alert(errors.join("\n"));
+            }
+        });
+    </script>
+</body>
+</html>

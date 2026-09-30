@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotspot Map</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
+</head>
+<body>
+    <header style="background-color: #ffcc00; padding: 20px; border-bottom: 4px solid #ff4500; text-align: center;">
+        <h1 style="color: #d32f2f;" title="Climate Intelligence Portal for Early Warning" id="main-title">Heatwave Intelligence System</h1>
+        <p style="color: #333333; font-weight: bold;" class="slogan">Current Season: Monsoon 2026</p>
+        <span style="font-family: monospace;">Logo Text: KJS-CES-01</span>
+    </header>
+    
+    <div class="container">
+        <aside class="sidebar sidebar-card">
+            <h3>Navigation Menu</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="navigation.html">Navigation</a></li>
+                <li><a href="about-system.html">About System</a></li>
+                <li><a href="sources.html">Data Sources</a></li>
+                <li><a href="hotspot-map.html">Hotspot Map</a></li>
+                <li><a href="forecast.html">Forecast</a></li>
+                <li><a href="alert-details.html">Alert Bulletins</a></li>
+                <li><a href="media.html">Media Coverage</a></li>
+                <li><a href="validation.html">Weather Data Entry</a></li>
+                <li><a href="subscribe.html">Subscribe</a></li>
+                <li><a href="https://mausam.imd.gov.in/" target="_blank">IMD Website</a></li>
+                <li><a href="mailto:coordinator@kjs-ces-01.org">Email Coordinator</a></li>
+                <li><a href="tel:+911234567890">Helpline</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h2>Regional Hotspot Map</h2>
+           
+            <p>Click on the designated zones (Top half for North, Bottom half for Central) to view region details.</p>
+            <img src="https://placehold.co/400x400?text=India+Hotspot+Map" alt="India Heatwave Map" usemap="#regionmap" width="400" height="400">
+            <map name="regionmap">
+                <area shape="rect" coords="0,0,400,200" alt="North Zone" href="alert-details.html" title="North Zone Details">
+                <area shape="rect" coords="0,201,400,400" alt="Central Zone" href="forecast.html" title="Central Zone Details">
+            </map>
+
+            <h3>Recent Satellite Imagery Gallery</h3>
+            <div class="gallery">
+                <img src="https://placehold.co/200x150?text=Satellite+1" alt="Thermal View 1">
+                <img src="https://placehold.co/200x150?text=Satellite+2" alt="Thermal View 2">
+                <img src="https://placehold.co/200x150?text=Satellite+3" alt="Thermal View 3">
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Disaster Management Agency</p>
+    </footer>
+</body>
+</html>

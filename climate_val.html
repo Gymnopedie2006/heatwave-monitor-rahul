@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Climate Intelligence Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <header style="background-color: #ffcc00; padding: 20px; border-bottom: 4px solid #ff4500; text-align: center;">
+        <h1 style="color: #d32f2f;" title="Climate Intelligence Portal for Early Warning" id="main-title">Heatwave Intelligence System</h1>
+        <p style="color: #333333; font-weight: bold;" class="slogan">Current Season: Monsoon 2026</p>
+        <span style="font-family: monospace;">Logo Text: KJS-CES-01</span>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar sidebar-card">
+            <h3>Navigation Menu</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="analysis.html">Temp Analysis (Expt 5)</a></li>
+                <li><a href="warning.html">Warning Engine (Expt 5)</a></li>
+                <li><a href="climate.html">Climate Object (Expt 5)</a></li>
+                <li><a href="temp_analysis.html">Array Analysis (Expt 5)</a></li>
+                <li><a href="climate_val.html">Citizen Register (Expt 5)</a></li>
+                <li><a href="navigation.html">All Pages</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <h2>Tasks 5 & 6: Climate Registration & Alert Preferences</h2>
+
+            <div id="regSuccess" class="success-box" style="display: none;"></div>
+
+            <form id="climateRegForm" action="#" method="post" novalidate>
+                <fieldset>
+                    <legend>User Credentials & Verification</legend>
+
+                    <label for="userName">User Full Name: *</label>
+                    <input type="text" id="userName" name="userName">
+                    <div id="userNameErr" class="error-text"></div>
+
+                    <label for="userMobile">Mobile Number (10 digits): *</label>
+                    <input type="tel" id="userMobile" name="userMobile" placeholder="e.g. 9876543210">
+                    <div id="userMobileErr" class="error-text"></div>
+
+                    <label for="userEmail">Email Address: *</label>
+                    <input type="email" id="userEmail" name="userEmail">
+                    <div id="userEmailErr" class="error-text"></div>
+
+                    <label for="userId">Climate User ID (Format: CLM-1234): *</label>
+                    <input type="text" id="userId" name="userId" placeholder="CLM-1234">
+                    <div id="userIdErr" class="error-text"></div>
+
+                    <label for="userLocation">Location / City: *</label>
+                    <input type="text" id="userLocation" name="userLocation">
+                    <div id="userLocationErr" class="error-text"></div>
+
+                    <label for="userPin">PIN / Postal Code (6 digits): *</label>
+                    <input type="text" id="userPin" name="userPin" placeholder="400077">
+                    <div id="userPinErr" class="error-text"></div>
+
+                    <label for="ageGroup">Age Group: *</label>
+                    <select id="ageGroup" name="ageGroup">
+                        <option value="">-- Select Age Bracket --</option>
+                        <option value="under18">Under 18</option>
+                        <option value="18-40">18 - 40</option>
+                        <option value="41-60">41 - 60</option>
+                        <option value="above60">Above 60 (High Vulnerability)</option>
+                    </select>
+                    <div id="ageGroupErr" class="error-text"></div>
+
+                    <label for="userCategory">User Category: *</label>
+                    <select id="userCategory" name="userCategory">
+                        <option value="">-- Select Category --</option>
+                        <option value="General Public">General Public</option>
+                        <option value="Senior Citizen">Senior Citizen</option>
+                        <option value="Student">Student</option>
+                        <option value="Outdoor Worker">Outdoor Worker</option>
+                        <option value="Healthcare Worker">Healthcare Worker</option>
+                        <option value="Government/Disaster Management">Government/Disaster Management</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div id="userCatErr" class="error-text"></div>
+
+                    <label for="alertChannel">Preferred Alert Channel: *</label>
+                    <select id="alertChannel" name="alertChannel">
+                        <option value="">-- Select Delivery Mechanism --</option>
+                        <option value="SMS">SMS</option>
+                        <option value="Email">Email</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Push Notification">Push Notification</option>
+                    </select>
+                    <div id="alertChanErr" class="error-text"></div>
+
+                    <label for="regDate">Registration Date: *</label>
+                    <input type="date" id="regDate" name="regDate">
+                    <div id="regDateErr" class="error-text"></div>
+
+                    <br>
+                    <button type="submit" style="background-color: #ff4500; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Register Now</button>
+                    <input type="reset" value="Reset Details">
+                </fieldset>
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Disaster Management Agency</p>
+    </footer>
+
+    <script>
+        document.getElementById('climateRegForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
+            document.querySelectorAll('input, select').forEach(el => el.style.border = '1px solid #cccccc');
+            document.getElementById('regSuccess').style.display = 'none';
+
+            function flagError(id, errId, msg) {
+                document.getElementById(errId).textContent = msg;
+                document.getElementById(id).style.border = '2px solid red';
+                isValid = false;
+            }
+
+            const nameVal = document.getElementById('userName').value.trim();
+            if (!/^[A-Za-z ]+$/.test(nameVal)) {
+                flagError('userName', 'userNameErr', 'User name must contain only alphabets and spaces.');
+            }
+
+            const mobileVal = document.getElementById('userMobile').value.trim();
+            if (!/^[6-9][0-9]{9}$/.test(mobileVal)) {
+                flagError('userMobile', 'userMobileErr', 'Mobile number must be exactly 10 digits (starting with 6-9).');
+            }
+
+            const emailVal = document.getElementById('userEmail').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+                flagError('userEmail', 'userEmailErr', 'Enter a valid email address.');
+            }
+
+            const userIdVal = document.getElementById('userId').value.trim();
+            if (!/^CLM-[0-9]{4}$/.test(userIdVal)) {
+                flagError('userId', 'userIdErr', 'User ID must strictly match format CLM-1234.');
+            }
+
+            const locVal = document.getElementById('userLocation').value.trim();
+            if (!/^[A-Za-z ]+$/.test(locVal)) {
+                flagError('userLocation', 'userLocationErr', 'Location must contain only alphabets and spaces.');
+            }
+
+            const pinVal = document.getElementById('userPin').value.trim();
+            if (!/^[0-9]{6}$/.test(pinVal)) {
+                flagError('userPin', 'userPinErr', 'PIN/Postal code must contain exactly 6 digits.');
+            }
+
+            if (!document.getElementById('ageGroup').value) {
+                flagError('ageGroup', 'ageGroupErr', 'Please select an age bracket.');
+            }
+            if (!document.getElementById('userCategory').value) {
+                flagError('userCategory', 'userCatErr', 'Please select a user category.');
+            }
+            if (!document.getElementById('alertChannel').value) {
+                flagError('alertChannel', 'alertChanErr', 'Please select an alert delivery channel.');
+            }
+
+            const dateVal = document.getElementById('regDate').value;
+            if (!dateVal) {
+                flagError('regDate', 'regDateErr', 'Registration date is required.');
+            } else {
+                const selectedDate = new Date(dateVal);
+                const today = new Date();
+                today.setHours(23, 59, 59, 999);
+                if (selectedDate > today) {
+                    flagError('regDate', 'regDateErr', 'Registration date cannot be a future date.');
+                }
+            }
+
+            if (isValid) {
+                const successBox = document.getElementById('regSuccess');
+                successBox.style.display = 'block';
+                successBox.innerHTML = `
+                    <h3>Registration Successful!</h3>
+                    <p>You are registered for Climate Intelligence Heatwave Monitoring and Early-Warning Alerts.</p>
+                    <small>User ID: ${userIdVal} | Category: ${document.getElementById('userCategory').value}</small>
+                `;
+                document.getElementById('climateRegForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
